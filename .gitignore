@@ -11,3 +11,13 @@
 *.lai
 *.la
 *.a
+
+#Other
+#np. katalogi build, release, gen, pliki .user, .sdf itp.
+Debug/
+Release/
+Build/
+GeneratedFiles/
+x64/
+*.sdf
+*.user
