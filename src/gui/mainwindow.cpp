@@ -22,8 +22,8 @@ MainWindow::MainWindow(QWidget* parent) :
     this->setCentralWidget(scrollArea);
 
     setupToolbar();
-    setWindowTitle(QString("%1 %2").arg(PROGRAM_NAME).arg(PROGRAM_VER));
-
+	setWindowTitle(QString("%1 %2").arg(PROGRAM_NAME).arg(PROGRAM_VER));
+	
     if (QFile(DEFAULT_IMG).exists())
         loadImage(DEFAULT_IMG);
 }
