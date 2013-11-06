@@ -103,9 +103,11 @@ QRgb Transformation::getPixel(int x, int y, Mode mode)
  */
 QRgb Transformation::getPixelCyclic(int x, int y)
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+	
+  int newx=x%image->width();
+  int newy=y%image->height();
 
-    return image->pixel(x,y);
+    return image->pixel(newx,newy);
 }
 
 /**
@@ -114,8 +116,11 @@ QRgb Transformation::getPixelCyclic(int x, int y)
   */
 QRgb Transformation::getPixelNull(int x, int y)
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+   if(x>image->width() &&y>image->height()){
 
+	int v = PIXEL_VAL_MAX;
+   image->setPixel(x,y,v);
+   }
     return image->pixel(x,y);
 }
 
@@ -126,9 +131,17 @@ QRgb Transformation::getPixelNull(int x, int y)
   */
 QRgb Transformation::getPixelRepeat(int x, int y)
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+		 int newx=x;
+		 int newy=y;
 
-    return image->pixel(x,y);
+ if(x>image->width()){
+	 newx=image->width();
+ }
+ if(y>image->height()){
+	 newy=image->height();
+ }
+
+    return image->pixel(newx,newy);
 }
 
 /** Returns a size x size part of the image centered around (x,y) */
@@ -137,9 +150,14 @@ math::matrix<double> Transformation::getWindow(int x, int y, int size,
                                                Mode mode = RepeatEdge)
 {
     math::matrix<double> window(size,size);
-
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
-
+	for (int i=0;i<size;i++){
+		for (int j=0;j<size;j++){
+int pom=size/2;
+QRgb pixel=getPixel(x-pom+j,y+pom-i,mode);
+int v=pixel*channel;
+    window(i,j)=v;
+		}
+	}
     return window;
 }
 

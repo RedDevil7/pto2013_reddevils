@@ -24,16 +24,22 @@ PNM* BlurGaussian::transform()
 math::matrix<double> BlurGaussian::getMask(int size, Mode)
 {
     math::matrix<double> mask(size, size);
-
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
-
+	Mode mode = RepeatEdge;
+   for (int i=0;i<radius;i++){
+	     for (int j=0;j<radius;j++){
+			 mask(i,j)=getGauss(i,j,sigma);
+		 }
+   }
+   convolute(mask, mode);
     return mask;
 }
 
 double BlurGaussian::getGauss(int x, int y, double sigma)
 {    
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
-
-    return 0;
+	double Pi=3.14;
+	double e= 2.718281828459;
+	double g=(pow(e,-((pow(x,2)+pow(y,2)))/2*pow(sigma,2)))/2*Pi*pow(sigma,2);
+   
+    return g;
 }
 
