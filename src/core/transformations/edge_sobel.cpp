@@ -14,7 +14,31 @@ EdgeSobel::EdgeSobel(PNM* img) :
 
 void EdgeSobel::prepareMatrices()
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+	math::matrix<double> gx(3,3);
+	math::matrix<double> gy(3,3);
+
+	gx(0,0) = -1;
+	gx(0,1) = 0;
+	gx(0,2) = 1;
+	gx(1,0) = -2;
+	gx(1,1) = 0;
+	gx(1,2) = 2;
+	gx(2,0) = -1;
+	gx(2,1) = 0;
+	gx(2,2) = 1;
+
+	gy(0,0) = 1;
+	gy(0,1) = 2;
+	gy(0,2) = 1;
+	gy(1,0) = 0;
+	gy(1,1) = 0;
+	gy(1,2) = 0;
+	gy(2,0) = -1;
+	gy(2,1) = -2;
+	gy(2,2) = -1;
+
+	g_x = gx;
+	g_y = gy;
 }
 
 math::matrix<double>* EdgeSobel::rawHorizontalDetection()
