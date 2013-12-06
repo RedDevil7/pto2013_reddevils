@@ -23,11 +23,9 @@ math::matrix<double> EdgeLaplaceOfGauss::getMask(int, Mode)
 	{	
 		for (int y=0; y<size; y++)
 		{
-			mask(x,y) = getLoG(x, y, sigma);
+			mask(x,y) = getLoG(x - size/2, y - size/2, sigma);
 		}
 	}
-	//Proszê pamiêtaæ, ¿e œrodek maski to inaczej wspó³rzêdne (0,0) dla getLoG(...).
-	mask((int) size/2, (int) size/2) = getLoG(0, 0, sigma);
 
     return mask;
 }
