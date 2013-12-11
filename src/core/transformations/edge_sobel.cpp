@@ -43,9 +43,22 @@ void EdgeSobel::prepareMatrices()
 
 math::matrix<double>* EdgeSobel::rawHorizontalDetection()
 {
-    math::matrix<double>* x_gradient = new math::matrix<double>(this->image->width(), this->image->height());
+	math::matrix<double>* x_gradient = new math::matrix<double>(this->image->width(), this->image->height());
 
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+	//int width = image->width();
+	//int height = image->height();
+	//EdgeSobel edgeSobel(image);
+	//Transformation lapl(edgeSobel);
+
+	//for (int x=0; x<width; x++)
+	//{	
+	//	for (int y=0; y<height; y++)
+	//	{
+	//		math::matrix<double> window = lapl.getWindow(x, y, 3, LChannel, NullEdge);
+
+	//		x_gradient(x, y) = sum(join(g_x, window));
+	//	}
+	//}
 
     return x_gradient;
 }
@@ -54,7 +67,20 @@ math::matrix<double>* EdgeSobel::rawVerticalDetection()
 {
     math::matrix<double>* y_gradient = new  math::matrix<double>(this->image->width(), this->image->height());
 
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+    //int width = image->width();
+	//int height = image->height();
+	//EdgeSobel edgeSobel(image);
+	//Transformation lapl(edgeSobel);
+
+	//for (int x=0; x<width; x++)
+	//{	
+	//	for (int y=0; y<height; y++)
+	//	{
+	//		math::matrix<double> window = lapl.getWindow(x, y, 3, LChannel, NullEdge);
+
+	//		y_gradient(x, y) = sum(join(g_y, window));
+	//	}
+	//}
 
     return y_gradient;
 }
