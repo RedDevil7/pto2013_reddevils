@@ -1,5 +1,5 @@
 #include "map_height.h"
-#include "negative_image.h"
+#include "conversion_grayscale.h"
 
 MapHeight::MapHeight(PNM* img) :
     Transformation(img)
@@ -18,7 +18,7 @@ PNM* MapHeight::transform()
 
     PNM* newImage = new PNM(width, height, QImage::Format_Indexed8);
 
-	newImage = NegativeImage::NegativeImage(image).transform();
+	newImage = ConversionGrayscale::ConversionGrayscale(image).transform();
 
     return newImage;
 }
