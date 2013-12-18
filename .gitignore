@@ -20,5 +20,6 @@ Build/
 GeneratedFiles/
 x64/
 *.sdf
+*.opensdf
 *.user
 *.suo
