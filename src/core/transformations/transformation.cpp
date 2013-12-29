@@ -103,11 +103,11 @@ QRgb Transformation::getPixel(int x, int y, Mode mode)
  */
 QRgb Transformation::getPixelCyclic(int x, int y)
 {
-	
-  int newx=x%image->width();
-  int newy=y%image->height();
-
-    return image->pixel(newx,newy);
+	x %= image->width();
+    y %= image->height();
+    if(x < 0) x += image->width();
+    if(y < 0) y += image->height();
+    return image->pixel(x, y);
 }
 
 /**
@@ -116,12 +116,14 @@ QRgb Transformation::getPixelCyclic(int x, int y)
   */
 QRgb Transformation::getPixelNull(int x, int y)
 {
-   if(x>image->width() &&y>image->height()){
-
-	int v = PIXEL_VAL_MAX;
-   image->setPixel(x,y,v);
-   }
-    return image->pixel(x,y);
+	if(x >= image->width() || x < 0 || y < 0 || y >= image->height())
+	{
+         return qRgb(0,0,0);
+	}
+	else
+	{
+		return image->pixel(x,y);
+	}
 }
 
 /**
@@ -131,17 +133,13 @@ QRgb Transformation::getPixelNull(int x, int y)
   */
 QRgb Transformation::getPixelRepeat(int x, int y)
 {
-		 int newx=x;
-		 int newy=y;
+	if(x < 0) x = 0;
+    else if(x >= image->width()) x = image->width()-1;
 
- if(x>image->width()){
-	 newx=image->width();
- }
- if(y>image->height()){
-	 newy=image->height();
- }
+    if(y < 0) y = 0;
+    else if(y >= image->height()) y = image->height()-1;
 
-    return image->pixel(newx,newy);
+    return image->pixel(x,y);
 }
 
 /** Returns a size x size part of the image centered around (x,y) */
@@ -150,14 +148,29 @@ math::matrix<double> Transformation::getWindow(int x, int y, int size,
                                                Mode mode = RepeatEdge)
 {
     math::matrix<double> window(size,size);
-	for (int i=0;i<size;i++){
-		for (int j=0;j<size;j++){
-int pom=size/2;
-QRgb pixel=getPixel(x-pom+j,y+pom-i,mode);
-int v=pixel*channel;
-    window(i,j)=v;
-		}
-	}
+
+    int x_offset = x - size/2;
+    int y_offset = y - size/2;
+
+    for(int ix=0; ix<size; ix++)
+	{
+        for(int iy=0; iy<size; iy++)
+		{
+            QRgb color = getPixel(x_offset + ix, y_offset + iy, mode);
+            switch(channel)
+			{
+				case RChannel:
+					window(ix, iy) = qRed(color);
+					break;
+				case GChannel:
+					window(ix, iy) = qGreen(color);
+					break;
+				default:
+					window(ix, iy) = qBlue(color);
+            }
+        }
+    }
+
     return window;
 }
 
